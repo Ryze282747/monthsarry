@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Monthsarry Baby!</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --primary-color: #ff6b95;
+  --secondary-color: #ff8fab;
+  --accent-color: #ffc2d1;
+  --text-color: #d4145a;
+  --bg-start: #ffe5ec;
+  --bg-end: #ffd1dc;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(-45deg, var(--bg-start), var(--bg-end), var(--accent-color), var(--secondary-color));
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  overflow: hidden;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(255, 107, 149, 0.2);
+  backdrop-filter: blur(8px);
+  text-align: center;
+  max-width: 400px;
+  position: relative;
+  overflow: hidden;
+  animation: floatContainer 3s ease-in-out infinite;
+}
+
+@keyframes floatContainer {
+  0%, 100% { transform: translateY(0) scale(1) }
+  50% { transform: translateY(-10px) scale(1.02) }
+}
+
+.container::before,
+.container::after {
+  content: '❤️';
+  position: absolute;
+  font-size: 24px;
+  opacity: 0;
+  animation: floatingHearts 4s linear infinite;
+}
+
+.container::before {
+  left: 10%;
+  animation-delay: 1s;
+}
+
+.container::after {
+  right: 10%;
+  animation-delay: 2s;
+}
+
+@keyframes floatingHearts {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+h1 {
+  font-family: 'Dancing Script', cursive;
+  color: var(--text-color);
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  animation: pulseText 2s ease-in-out infinite;
+}
+
+@keyframes pulseText {
+  0%, 100% { transform: scale(1) }
+  50% { transform: scale(1.05) }
+}
+
+.message {
+  padding: 20px;
+  background: linear-gradient(45deg, var(--accent-color), var(--secondary-color));
+  border-radius: 15px;
+  color: white;
+  font-size: 1.2em;
+  margin: 20px 0;
+  transform-origin: center;
+  animation: messageGlow 3s ease-in-out infinite;
+}
+
+@keyframes messageGlow {
+  0%, 100% { box-shadow: 0 0 10px var(--secondary-color) }
+  50% { box-shadow: 0 0 20px var(--primary-color) }
+}
+
+.hearts {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--primary-color);
+  transform: rotate(45deg);
+  animation: heartFloat 4s ease-in infinite;
+}
+
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.heart::before {
+  left: -10px;
+}
+
+.heart::after {
+  top: -10px;
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: rotate(45deg) translateY(0) scale(0);
+    opacity: 0;
+  }
+  20% {
+    transform: rotate(45deg) translateY(-20vh) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(45deg) translateY(-100vh) scale(0.2);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="hearts">
+  <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="heart" style="left: 30%; animation-delay: 1.5s;"></div>
+  <div class="heart" style="left: 50%; animation-delay: 3s;"></div>
+  <div class="heart" style="left: 70%; animation-delay: 4.5s;"></div>
+  <div class="heart" style="left: 90%; animation-delay: 6s;"></div>
+</div>
+
+<div class="container">
+  <h1>Enter My Birthday First (MM/DD):</h1>
+  <div class="input-wrapper">
+    <input type="text" id="dateInput" placeholder="MM/DD" autocomplete="off">
+    <span class="input-border"></span>
+  </div>
+  <p id="message"></p>
+  <button id="submitButton" disabled>
+    <span class="button-text">Enter</span>
+    <span class="button-hearts">❤️</span>
+  </button>
+</div>
+
+<style>
+.input-wrapper {
+  position: relative;
+  margin: 25px 0;
+}
+
+#dateInput {
+  width: 200px;
+  padding: 15px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 107, 149, 0.1);
+}
+
+#dateInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 5px 20px rgba(255, 107, 149, 0.2);
+  transform: translateY(-2px);
+}
+
+.input-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  transition: width 0.4s ease;
+}
+
+#dateInput:focus ~ .input-border {
+  width: 100%;
+}
+
+#submitButton {
+  position: relative;
+  padding: 12px 30px;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 15px rgba(255, 107, 149, 0.2);
+}
+
+#submitButton:enabled:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 149, 0.3);
+}
+
+#submitButton:enabled:active {
+  transform: translateY(-1px);
+}
+
+#submitButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.button-text {
+  position: relative;
+  z-index: 1;
+}
+
+.button-hearts {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+#submitButton:enabled:hover .button-text {
+  animation: buttonTextFloat 1s ease infinite;
+}
+
+#submitButton:enabled:hover .button-hearts {
+  opacity: 1;
+  animation: buttonHeartsFloat 1.5s ease infinite;
+}
+
+@keyframes buttonTextFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes buttonHeartsFloat {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  50% { transform: translate(-50%, -60%) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -80%) scale(0); opacity: 0; }
+}
+
+#message {
+  margin: 15px 0;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+#message.error {
+  background: rgba(255, 0, 0, 0.1);
+  color: #d32f2f;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+</style>
+
+<script>
+const dateInput = document.getElementById('dateInput');
+const submitButton = document.getElementById('submitButton');
+const message = document.getElementById('message');
+
+dateInput.addEventListener('input', (e) => {
+  e.target.value = e.target.value.replace(/[^0-9/]/g, '');
+  if (e.target.value.length === 2 && !e.target.value.includes('/')) {
+    e.target.value += '/';
+  }
+  
+  const inputDate = e.target.value;
+  const correctDate = '08/09';
+  const isValidFormat = /^\d{2}\/\d{2}$/.test(inputDate);
+  
+  if (isValidFormat) {
+    const [month, day] = inputDate.split('/').map(Number);
+    const isValidDate = month >= 1 && month <= 12 && day >= 1 && day <= 31;
+    
+    if (!isValidDate) {
+      submitButton.disabled = true;
+      message.textContent = "Invalid date values";
+      message.className = "error";
+      return;
+    }
+    
+    if (inputDate === correctDate) {
+      submitButton.disabled = false;
+      message.textContent = "YAY ILOVEYOUU! ❤️";
+      message.className = "";
+      submitButton.style.animation = "correctAnswer 0.5s ease-in-out";
+    } else {
+      submitButton.disabled = true;
+      message.textContent = "Awit di alam.";
+      message.className = "error";
+    }
+  } else {
+    submitButton.disabled = true;
+    if (inputDate.length > 0) {
+      message.textContent = "Please use format: MM/DD";
+      message.className = "error";
+    } else {
+      message.textContent = "";
+    }
+  }
+});
+
+submitButton.addEventListener('click', () => {
+  submitButton.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    window.location.href = 'letter/index.html';
+  }, 300);
+});
+
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+  document.querySelector('.hearts').appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 5000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
